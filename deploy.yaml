@@ -1,0 +1,23 @@
+---
+- name: Run using a project directory
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: Remove flask services
+      docker_service:
+        project_src: flask
+        state: absent
+
+    - name: Run docker-compose for flask
+      docker_service:
+        project_src: flask
+      register: output
+
+    - debug:
+        var: output
+
+    - assert:
+        that:
+          - "web.flask_web_1.state.running"
+          - "db.flask_db_1.state.running"

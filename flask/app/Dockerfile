@@ -1,0 +1,12 @@
+FROM python:alpine3.7
+
+EXPOSE 5000
+
+WORKDIR /app
+
+COPY requirements.txt /app
+RUN pip install -r requirements.txt
+
+COPY app.py /app
+COPY templates /app/templates
+CMD python app.py
